@@ -24,29 +24,33 @@ function calcular() {
   let cinta, label;
 
   switch (op) {
+    case "C":
+      let resta= ejecutarMaquinaDeTuring(automataResta, representarOperacion(a, b, "-"));
+      console.log("resta", resta);
+      let factorialResta= ejecutarMaquinaDeTuring(automataMulti,ejecutarMaquinaDeTuring(automataFactorial, resta));
+      console.log("factorialResta", factorialResta);
+      let factorialA= ejecutarMaquinaDeTuring(automataMulti,ejecutarMaquinaDeTuring(automataFactorial, "1".repeat(a)));
+      console.log("factorialA", factorialA);
+      let factorialB= ejecutarMaquinaDeTuring(automataMulti,ejecutarMaquinaDeTuring(automataFactorial,"1".repeat(b)));
+      console.log("factorialB", factorialB);
+      let multi= ejecutarMaquinaDeTuring(automataMulti, factorialB+"*"+factorialResta);
+      console.log("multi", multi);
+      let division= ejecutarMaquinaDeTuring(automataDivision, factorialA+"/"+multi);
+      console.log("division", division);
+
+      setResult(division);
+      break;
     case "+":
       ejecutarMaquinaDeTuring(automataSuma, representarOperacion(a, b, op));
       break;
     case "-":
-      cinta = createCinta(a, b, op);
-      label = Array.from(document.getElementsByTagName("label"))[3];
-
-      let resta = restaTurin(cinta);
-      label.innerText = `Resultado: [${resta.toString().replace(/,/g, "|")}]`;
+      ejecutarMaquinaDeTuring(automataResta, representarOperacion(a, b, op));
       break;
     case "*":
-      let validado= ejecutarMaquinaDeTuring(automataMulti0PorNum, representarOperacion(a, b, op));
-      let validado2= ejecutarMaquinaDeTuring(automataMultiNumPor0, validado);
-      ejecutarMaquinaDeTuring(automataMulti, validado2);
+      ejecutarMaquinaDeTuring(automataMulti, representarOperacion(a, b, op));
       break;
     case "/":
-      cinta = createCinta(a, b, op);
-      label = Array.from(document.getElementsByTagName("label"))[3];
-
-      let division = divisionTurin(cinta);
-      label.innerText = `Resultado: [${division
-        .toString()
-        .replace(/,/g, "|")}]`;
+      ejecutarMaquinaDeTuring(automataResta, representarOperacion(a, b, op));
       break;
 
     default:

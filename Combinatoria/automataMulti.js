@@ -14,7 +14,10 @@ var q7 = new Nodo("q7", false);
 var q8 = new Nodo("q8", false);
 var q9 = new Nodo("q9", false);
 var q10 = new Nodo("q10", false);
-var q11 = new Nodo("q11", true); // Estado final
+var q11 = new Nodo("q11", false);
+var q12 = new Nodo("q12", false); 
+var q13 = new Nodo("q13", false);
+var q14 = new Nodo("q14", true); // Estado final
 
 // Agregar arcos
 q0.agregarArco("q0", "1", "1", "R");
@@ -54,13 +57,29 @@ q8.agregarArco("q8", "1", "1", "L");
 q8.agregarArco("q9", "#", "#", "R");
 q8.agregarArco("q9", "*", "*", "R");
 
-q9.agregarArco("q9", "1", "#", "S");
-q9.agregarArco("q9", "*", "#", "S");
-q9.agregarArco("q9", "A", "#", "S");
-q9.agregarArco("q10", "=", "#", "L");
+q9.agregarArco("q9", "1", "e", "R");
+q9.agregarArco("q9", "*", "e", "R");
+q9.agregarArco("q9", "A", "e", "R");
+q9.agregarArco("q10", "=", "e", "R");
 
-q10.agregarArco("q0", "*", "*", "R");
-q10.agregarArco("q11", "#", "#", "R");
+q10.agregarArco("q10", "e", "e", "R");
+q10.agregarArco("q11", "1", "e", "L");
+q10.agregarArco("q13", "#", "#", "L");
+
+q11.agregarArco("q11", "e", "e", "L");
+q11.agregarArco("q12", "*", "*", "R");
+q11.agregarArco("q12", "#", "#", "R");
+q11.agregarArco("q12", "1", "1", "R");
+
+q12.agregarArco("q10", "e", "1", "R");
+
+q13.agregarArco("q13", "e", "#", "L");
+q13.agregarArco("q13", "1", "1", "L");
+q13.agregarArco("q0", "*", "*", "R");
+q13.agregarArco("q14", "#", "#", "R");
+
+
+
 
 // Agregar nodos al autómata
 automataMulti.agregarNodo(q0);
@@ -75,6 +94,9 @@ automataMulti.agregarNodo(q8);
 automataMulti.agregarNodo(q9);
 automataMulti.agregarNodo(q10);
 automataMulti.agregarNodo(q11);
+automataMulti.agregarNodo(q12);
+automataMulti.agregarNodo(q13);
+automataMulti.agregarNodo(q14);
 
 // Mostrar el autómata
 console.log(automataMulti.toString());
