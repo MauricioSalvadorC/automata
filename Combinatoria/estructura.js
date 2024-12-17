@@ -68,7 +68,95 @@ class Automata {
 
 ///////////////////////////////////////////////////////////////////////////
 
-function ejecutarMaquinaDeTuring(automata, cinta, maxPasos = 100000) {
+function actualizarVisualizacionCinta(cinta, pos, nodoActual) {
+  let cintaHTML = "<table>";
+  let flechaHTML = "<tr>";
+  let nodoHTML = "<tr>";
+
+  for (let i = 0; i < cinta.length; i++) {
+    cintaHTML += `<td>${cinta[i]}</td>`;
+
+    if (i === pos) {
+      flechaHTML += `<td class="flecha">↓</td>`;
+      nodoHTML += `<td class="nodo-actual">${nodoActual.nombre}</td>`;
+    } else {
+      flechaHTML += `<td></td>`;
+      nodoHTML += `<td></td>`;
+    }
+  }
+
+  cintaHTML += "</table>";
+  flechaHTML += "</tr>";
+  nodoHTML += "</tr>";
+
+  document.getElementById("cinta-visual").innerHTML =
+    cintaHTML + "<table>" + flechaHTML + nodoHTML + "</table>";
+}
+
+async function ejecutarMaquinaDeTuring(automata, cinta, maxPasos = 100000) {
+  actualizarTituloMaquina(automata.nombre);
+  let pos = 0;
+  let nodoActual = automata.obtenerPrimerNodo();
+  let cintaActual = cinta;
+  let pasos = 0;
+
+  while (nodoActual) {
+    if (pasos >= maxPasos) {
+      setResult(`Se alcanzó el límite máximo de ${maxPasos} pasos.`);
+      break;
+    }
+    pasos++;
+
+    let simboloActual =
+      pos >= 0 && pos < cintaActual.length ? cintaActual[pos] : "#";
+    const arco = nodoActual.arcos.find((arco) => arco.esta === simboloActual);
+
+    if (arco) {
+      setResult(
+        `Paso ${pasos}: (${nodoActual.nombre}, ${cintaActual}, ${pos}) -> ${arco.esta} -> (${arco.apunta}, ${arco.reemplazo}, ${arco.dir})`
+      );
+
+      // Actualización de la cinta
+      if (pos >= 0 && pos < cintaActual.length) {
+        let reemplazo = arco.reemplazo === "#" ? "#" : arco.reemplazo;
+        cintaActual =
+          cintaActual.slice(0, pos) + reemplazo + cintaActual.slice(pos + 1);
+      } else if (pos === cintaActual.length && arco.reemplazo !== "#") {
+        cintaActual += arco.reemplazo;
+      } else if (pos === -1 && arco.reemplazo !== "#") {
+        cintaActual = arco.reemplazo + cintaActual;
+      }
+
+      // Mover la cabeza
+      if (arco.dir === "R") pos++;
+      else if (arco.dir === "L") pos--;
+
+      nodoActual = automata.obtenerNodo(arco.apunta);
+
+      // Actualización visual
+      actualizarVisualizacionCinta(cintaActual, pos, nodoActual);
+      await new Promise((resolve) => setTimeout(resolve, velocidadAnimacion));
+
+      if (nodoActual?.esFinal) {
+        console.log(`Nodo final alcanzado (${nodoActual.nombre}).`);
+        break;
+      }
+    } else {
+      setResult(
+        `No hay transición para (${nodoActual.nombre}, ${cintaActual}, ${pos})`
+      );
+      break;
+    }
+  }
+  cintaActual = cintaActual.replace(/#/g, ""); // Eliminar los símbo
+  setResult(
+    `Ejecución finalizada en ${pasos} pasos. cantidad de digitos: ${cintaActual.length}`
+  );
+
+  return cintaActual; // Eliminamos símbolos '#' al final
+}
+
+function ejecutarMaquinaDeTuringSinDelay(automata, cinta, maxPasos = 100000) {
   let pos = 0; // Posición de la cabeza en la cinta
   let nodoActual = automata.obtenerPrimerNodo(); // Empezar en el primer nodo
   let cintaActual = cinta; // Cinta original en forma de string
@@ -109,15 +197,6 @@ function ejecutarMaquinaDeTuring(automata, cinta, maxPasos = 100000) {
       } else if (pos === -1 && arco.reemplazo !== "#") {
         // Si la posición es -1, agregamos el símbolo al inicio de la cinta
         cintaActual = arco.reemplazo + cintaActual;
-      } else if (
-        pos >= 0 &&
-        pos < cintaActual.length &&
-        arco.reemplazo === "#"
-      ) {
-        // Si el reemplazo es '#', eliminamos el símbolo de la cinta
-        console.log("Eliminando símbolo de la cinta");
-
-        cintaActual = cintaActual.slice(0, pos) + cintaActual.slice(pos + 1);
       }
 
       // Movemos la cabeza (si es 'R' mueve a la derecha, si es 'L' a la izquierda)
@@ -143,8 +222,10 @@ function ejecutarMaquinaDeTuring(automata, cinta, maxPasos = 100000) {
       break;
     }
   }
-  cintaActual= cintaActual.replace(/#/g, ""); // Eliminar los símbolos '#' de la cinta
-  console.log(`Ejecución finalizada en ${pasos} pasos. cantidad de digitos: ${cintaActual.length}`);
+  cintaActual = cintaActual.replace(/#/g, ""); // Eliminar los símbolos '#' de la cinta
+  console.log(
+    `Ejecución finalizada en ${pasos} pasos. cantidad de digitos: ${cintaActual.length}`
+  );
   // Devolvemos la cinta modificada como string
   return cintaActual;
 }

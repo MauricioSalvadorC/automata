@@ -1,38 +1,169 @@
+/* General Styles */
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 20px;
-  }
-  
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 20px;
+  background-color: #f4f4f4; /* Fondo suave */
+}
+
+.container {
+  max-width: 400px;
+  margin: 0 auto;
+  background-color: #fff; /* Fondo blanco para destacar el contenido */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+label {
+  display: block;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+input[type="number"],
+select,
+button,
+textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+input[type="number"]:focus,
+select:focus,
+button:focus,
+textarea:focus {
+  outline: none;
+  border-color: #4caf50; /* Color de foco verde */
+}
+
+button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #45a049; /* Cambiar a un verde más oscuro */
+}
+
+textarea {
+  height: 250px;
+  resize: vertical; /* Permitir redimensionar en dirección vertical */
+}
+
+/* Visualización de la Máquina de Turing */
+.turing-container {
+  margin-top: 20px;
+  font-family: monospace;
+  text-align: center;
+}
+
+#cinta-visual {
+  display: inline-block;
+  border-collapse: collapse;
+}
+#cinta-visual td:hover {
+  background-color: #e0f7fa;
+  transform: scale(1.1);
+  cursor: pointer; /* Indicar interactividad */
+}
+#cinta-visual td {
+  border: 1px solid black;
+  padding: 5px;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
+}
+
+#cinta-visual td:hover {
+  background-color: #e0f7fa; /* Color al pasar el ratón */
+}
+
+#flecha-visual {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5px;
+}
+
+.flecha {
+  font-size: 1.2em;
+  color: blue;
+  font-weight: bold;
+  text-align: center;
+}
+
+.nodo-actual {
+  font-weight: bold;
+  color: red;
+}
+
+.velocidad-control {
+  margin: auto;
+  max-width: 500px;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+#velocidad-valor {
+  font-weight: bold;
+}
+
+/* Mejoras de accesibilidad: Focus visible en los campos interactivos */
+input[type="number"]:focus,
+select:focus,
+button:focus {
+  outline: 3px solid #4caf50;
+}
+
+/* Responsividad: Ajustar para pantallas pequeñas */
+@media (max-width: 600px) {
   .container {
-    max-width: 400px;
-    margin: 0 auto;
-  }
-  
-  label {
-    display: block;
-    margin-top: 10px;
-  }
-  
-  input[type="number"],
-  select {
     width: 100%;
-    padding: 5px;
-    margin-top: 5px;
+    padding: 15px;
   }
-  
-  button {
-    padding: 10px 20px;
-    margin-top: 10px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    cursor: pointer;
+  input[type="number"], select, button {
+    font-size: 14px;
   }
-  
   textarea {
-    width: 100% !important;
-    padding: 5px;
-    margin-top: 5px;
+    font-size: 14px;
   }
-  
+  #cinta-visual td {
+    font-size: 14px;
+  }
+}
+
+/* Mejoras de espaciado y legibilidad */
+label {
+  font-size: 1.1em;
+}
+
+input[type="number"],
+select,
+textarea,
+button {
+  font-size: 16px;
+}
+
+button {
+  padding: 12px;
+}
+
+/* Transición suave de los elementos de la cinta */
+#cinta-visual td {
+  transition: background-color 0.2s ease, transform 0.3s ease;
+}
+
+#cinta-visual td:hover {
+  transform: scale(1.1); /* Ampliar celdas al pasar el ratón */
+}

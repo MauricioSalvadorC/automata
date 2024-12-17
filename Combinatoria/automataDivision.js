@@ -1,6 +1,6 @@
 /////////////////////////////////////////////////////////////////////////////////////
-// Crear el autómata multiplicación infinita
-const automataDivision = new Automata("Multiplicación Infinita");
+// Crear el autómata division
+const automataDivision = new Automata("División");
 
 // Crear nodos (estados)
 var q0 = new Nodo("q0", false); // Estado inicial

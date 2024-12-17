@@ -1,6 +1,6 @@
 /////////////////////////////////////////////////////////////////////////////////////
-// Crear el autómata multiplicación infinita
-const automataMulti = new Automata("Multiplicación Infinita");
+// Crear el autómata multiplicación
+const automataMulti = new Automata("Multiplicación");
 
 // Crear nodos (estados)
 var q0 = new Nodo("q0", false); // Estado inicial
