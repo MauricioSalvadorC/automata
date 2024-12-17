@@ -3,6 +3,7 @@
 const automataFactorial = new Automata("Factorial");
 
 // Crear nodos (estados)
+var qa = new Nodo("qa", false); // Estado inicial
 var q0 = new Nodo("q0", false); // Estado inicial
 var q1 = new Nodo("q1", false);
 var q2 = new Nodo("q2", false);
@@ -15,6 +16,9 @@ var q8 = new Nodo("q8", false);
 var q9 = new Nodo("q9", true); // Estado final
 
 // Agregar arcos
+qa.agregarArco("q0", "1", "1", "R");
+qa.agregarArco("q9", "#", "1", "S");
+
 q0.agregarArco("q0", "1", "1", "R");
 q0.agregarArco("q1", "#", "*", "L");
 
@@ -53,6 +57,7 @@ q8.agregarArco("q8", "*", "*", "L");
 q8.agregarArco("q9", "#", "#", "R");
 
 // Agregar nodos al autómata
+automataFactorial.agregarNodo(qa);
 automataFactorial.agregarNodo(q0);
 automataFactorial.agregarNodo(q1);
 automataFactorial.agregarNodo(q2);

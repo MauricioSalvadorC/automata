@@ -19,6 +19,9 @@ var q12 = new Nodo("q12", false);
 var q13 = new Nodo("q13", false);
 var q14 = new Nodo("q14", true); // Estado final
 
+var qa1 = new Nodo("qa1", false); // Estado inicial
+var qa2 = new Nodo("qa2", false); // Estado inicial
+
 // Agregar arcos
 q0.agregarArco("q0", "1", "1", "R");
 q0.agregarArco("q0", "*", "*", "R");
@@ -29,6 +32,13 @@ q1.agregarArco("q8", "*", "*", "L");
 
 q2.agregarArco("q2", "1", "1", "L");
 q2.agregarArco("q3", "*", "*", "L");
+q2.agregarArco("qa1", "#", "#", "R");
+
+qa1.agregarArco("qa1", "A", "1", "R");
+qa1.agregarArco("qa2", "=", "#", "L");
+
+qa2.agregarArco("qa2", "1", "1", "L");
+qa2.agregarArco("q14", "#", "#", "R");
 
 q3.agregarArco("q3", "B", "B", "L");
 q3.agregarArco("q4", "1", "B", "R");
@@ -82,6 +92,7 @@ q13.agregarArco("q14", "#", "#", "R");
 
 
 // Agregar nodos al autómata
+
 automataMulti.agregarNodo(q0);
 automataMulti.agregarNodo(q1);
 automataMulti.agregarNodo(q2);
@@ -97,6 +108,8 @@ automataMulti.agregarNodo(q11);
 automataMulti.agregarNodo(q12);
 automataMulti.agregarNodo(q13);
 automataMulti.agregarNodo(q14);
+automataMulti.agregarNodo(qa1);
+automataMulti.agregarNodo(qa2);
 
 // Mostrar el autómata
 console.log(automataMulti.toString());

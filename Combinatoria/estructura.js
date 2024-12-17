@@ -68,7 +68,7 @@ class Automata {
 
 ///////////////////////////////////////////////////////////////////////////
 
-function ejecutarMaquinaDeTuring(automata, cinta, maxPasos = 4000) {
+function ejecutarMaquinaDeTuring(automata, cinta, maxPasos = 100000) {
   let pos = 0; // Posición de la cabeza en la cinta
   let nodoActual = automata.obtenerPrimerNodo(); // Empezar en el primer nodo
   let cintaActual = cinta; // Cinta original en forma de string
@@ -140,7 +140,6 @@ function ejecutarMaquinaDeTuring(automata, cinta, maxPasos = 4000) {
       console.log(
         `No se encontró arco para (${nodoActual.nombre}, ${cintaActual}, ${pos})`
       );
-      return cinta;
       break;
     }
   }
