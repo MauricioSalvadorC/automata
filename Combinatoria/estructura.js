@@ -93,12 +93,15 @@ function actualizarVisualizacionCinta(cinta, pos, nodoActual) {
     cintaHTML + "<table>" + flechaHTML + nodoHTML + "</table>";
 }
 
+
 async function ejecutarMaquinaDeTuring(automata, cinta, maxPasos = 100000) {
-  actualizarTituloMaquina(automata.nombre);
-  let pos = 0;
   let nodoActual = automata.obtenerPrimerNodo();
-  let cintaActual = cinta;
+  let cintaActual = "#" + cinta + "#";
+  let pos = 1;
   let pasos = 0;
+  actualizarTituloMaquina(automata.nombre + ": " + cinta);
+  actualizarVisualizacionCinta(cintaActual, pos, nodoActual);
+  await new Promise((resolve) => setTimeout(resolve, 1000));
 
   while (nodoActual) {
     if (pasos >= maxPasos) {
@@ -118,13 +121,20 @@ async function ejecutarMaquinaDeTuring(automata, cinta, maxPasos = 100000) {
 
       // Actualización de la cinta
       if (pos >= 0 && pos < cintaActual.length) {
-        let reemplazo = arco.reemplazo === "#" ? "#" : arco.reemplazo;
         cintaActual =
-          cintaActual.slice(0, pos) + reemplazo + cintaActual.slice(pos + 1);
-      } else if (pos === cintaActual.length && arco.reemplazo !== "#") {
+          cintaActual.slice(0, pos) +
+          arco.reemplazo +
+          cintaActual.slice(pos + 1);
+        if (pos === cintaActual.length-1 && arco.reemplazo !== "#") cintaActual += "#";
+        if (pos === 0 && arco.reemplazo !== "#"){
+          cintaActual = "#"+cintaActual;
+          pos++;
+        } 
+      } else if (pos === cintaActual.length) {
         cintaActual += arco.reemplazo;
-      } else if (pos === -1 && arco.reemplazo !== "#") {
+      } else if (pos < 0) {
         cintaActual = arco.reemplazo + cintaActual;
+        pos++;
       }
 
       // Mover la cabeza
@@ -148,14 +158,89 @@ async function ejecutarMaquinaDeTuring(automata, cinta, maxPasos = 100000) {
       break;
     }
   }
+
   cintaActual = cintaActual.replace(/#/g, ""); // Eliminar los símbo
+
   setResult(
     `Ejecución finalizada en ${pasos} pasos. cantidad de digitos: ${cintaActual.length}`
   );
+  setResult(`${automata.nombre}: ${"#" + cintaActual + "#"}`);
 
+  actualizarTituloMaquina(automata.nombre + ": " + cinta+" = "+cintaActual);
+  await new Promise((resolve) => setTimeout(resolve, 1000));
   return cintaActual; // Eliminamos símbolos '#' al final
 }
+//esta version es sin los # al inicio y al final
+// async function ejecutarMaquinaDeTuring(automata, cinta, maxPasos = 100000) {
+//   let pos = 0;
+//   let nodoActual = automata.obtenerPrimerNodo();
+//   let cintaActual = cinta;
+//   let pasos = 0;
+//   actualizarTituloMaquina(automata.nombre + ": " + cinta);
+//   actualizarVisualizacionCinta(cintaActual, pos, nodoActual);
+//   await new Promise((resolve) => setTimeout(resolve, 1000));
 
+//   while (nodoActual) {
+//     if (pasos >= maxPasos) {
+//       setResult(`Se alcanzó el límite máximo de ${maxPasos} pasos.`);
+//       break;
+//     }
+//     pasos++;
+
+//     let simboloActual =
+//       pos >= 0 && pos < cintaActual.length ? cintaActual[pos] : "#";
+//     const arco = nodoActual.arcos.find((arco) => arco.esta === simboloActual);
+
+//     if (arco) {
+//       setResult(
+//         `Paso ${pasos}: (${nodoActual.nombre}, ${cintaActual}, ${pos}) -> ${arco.esta} -> (${arco.apunta}, ${arco.reemplazo}, ${arco.dir})`
+//       );
+
+//       // Actualización de la cinta
+//       if (pos >= 0 && pos < cintaActual.length) {
+//         cintaActual =
+//           cintaActual.slice(0, pos) +
+//           arco.reemplazo +
+//           cintaActual.slice(pos + 1);
+//       } else if (pos === cintaActual.length && arco.reemplazo !== "#") {
+//         cintaActual += arco.reemplazo;
+//       } else if (pos === -1 && arco.reemplazo !== "#") {
+//         cintaActual = arco.reemplazo + cintaActual;
+//         pos++;
+//       }
+
+//       // Mover la cabeza
+//       if (arco.dir === "R") pos++;
+//       else if (arco.dir === "L") pos--;
+
+//       nodoActual = automata.obtenerNodo(arco.apunta);
+
+//       // Actualización visual
+//       actualizarVisualizacionCinta(cintaActual, pos, nodoActual);
+//       await new Promise((resolve) => setTimeout(resolve, velocidadAnimacion));
+
+//       if (nodoActual?.esFinal) {
+//         console.log(`Nodo final alcanzado (${nodoActual.nombre}).`);
+//         break;
+//       }
+//     } else {
+//       setResult(
+//         `No hay transición para (${nodoActual.nombre}, ${cintaActual}, ${pos})`
+//       );
+//       break;
+//     }
+//   }
+//   cintaActual = cintaActual.replace(/#/g, ""); // Eliminar los símbo
+
+//   setResult(
+//     `Ejecución finalizada en ${pasos} pasos. cantidad de digitos: ${cintaActual.length}`
+//   );
+//   setResult(`${automata.nombre}: ${"#" + cintaActual + "#"}`);
+
+//   actualizarTituloMaquina(automata.nombre + ": " + cinta+" = "+cintaActual);
+//   await new Promise((resolve) => setTimeout(resolve, 1000));
+//   return cintaActual; // Eliminamos símbolos '#' al final
+// }
 function ejecutarMaquinaDeTuringSinDelay(automata, cinta, maxPasos = 100000) {
   let pos = 0; // Posición de la cabeza en la cinta
   let nodoActual = automata.obtenerPrimerNodo(); // Empezar en el primer nodo
