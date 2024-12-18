@@ -74,12 +74,14 @@ function actualizarVisualizacionCinta(cinta, pos, nodoActual) {
   let nodoHTML = "<tr>";
 
   for (let i = 0; i < cinta.length; i++) {
-    cintaHTML += `<td>${cinta[i]}</td>`;
+    
 
     if (i === pos) {
+      cintaHTML += `<td class="nodo-actual">${cinta[i]}</td>`;
       flechaHTML += `<td class="flecha">↓</td>`;
       nodoHTML += `<td class="nodo-actual">${nodoActual.nombre}</td>`;
     } else {
+      cintaHTML += `<td>${cinta[i]}</td>`;
       flechaHTML += `<td></td>`;
       nodoHTML += `<td></td>`;
     }
