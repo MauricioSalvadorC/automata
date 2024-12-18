@@ -84,10 +84,6 @@ textarea {
   transition: background-color 0.2s ease;
 }
 
-#cinta-visual td:hover {
-  background-color: #e0f7fa; /* Color al pasar el ratón */
-}
-
 #flecha-visual {
   display: flex;
   justify-content: center;
@@ -141,29 +137,4 @@ button:focus {
   #cinta-visual td {
     font-size: 14px;
   }
-}
-
-/* Mejoras de espaciado y legibilidad */
-label {
-  font-size: 1.1em;
-}
-
-input[type="number"],
-select,
-textarea,
-button {
-  font-size: 16px;
-}
-
-button {
-  padding: 12px;
-}
-
-/* Transición suave de los elementos de la cinta */
-#cinta-visual td {
-  transition: background-color 0.2s ease, transform 0.3s ease;
-}
-
-#cinta-visual td:hover {
-  transform: scale(1.1); /* Ampliar celdas al pasar el ratón */
 }
