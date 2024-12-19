@@ -5,7 +5,7 @@ function actualizarTituloMaquina(nombreMaquina) {
   tituloMaquinaElemento.innerText = `${nombreMaquina}`;
 }
 // Constantes y configuraciones iniciales
-const velocidadPorDefecto = 500;
+const velocidadPorDefecto = 400;
 let velocidadAnimacion = velocidadPorDefecto;
 
 // Referencias al DOM

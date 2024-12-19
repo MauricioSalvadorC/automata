@@ -26,20 +26,18 @@
         <option value="!">Factorial (!)</option> <!-- Agregamos la opción de Factorial -->
         <option value="C">Combinatoria (C)</option>
     </select>
-
+    <div class="velocidad-control">
+        <label for="velocidad">Velocidad de la animación: <span id="velocidad-valor">400</span>ms</label>
+        <input type="range" id="velocidad" min="0" max="1000" value="400" step="10" />
+        
+    </div>
     <button onclick="calcular()">Calcular</button>
+    
     <div class="turing-container">
         <!-- Título de la máquina de Turing -->
-        <div id="titulo-maquina" style="font-weight: bold; font-size: 1.2em; text-align: center;"></div>
+        <div id="titulo-maquina"></div>
 
         <div id="cinta-visual"></div>
-
-        <!-- Control para la velocidad -->
-        <div class="velocidad-control">
-            <label for="velocidad">Velocidad de la animación (ms): </label>
-            <input type="range" id="velocidad" min="1" max="1000" value="500" step="10" />
-            <span id="velocidad-valor">500</span> ms
-        </div>
     </div>
 
     <label for="resultado">Resultado:</label>

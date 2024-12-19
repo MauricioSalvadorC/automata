@@ -77,7 +77,7 @@ function actualizarVisualizacionCinta(cinta, pos, nodoActual) {
     
 
     if (i === pos) {
-      cintaHTML += `<td class="nodo-actual">${cinta[i]}</td>`;
+      cintaHTML += `<td class="cinta-actual">${cinta[i]}</td>`;
       flechaHTML += `<td class="flecha">↓</td>`;
       nodoHTML += `<td class="nodo-actual">${nodoActual.nombre}</td>`;
     } else {

@@ -62,7 +62,7 @@ textarea {
 .turing-container {
   margin-top: 20px;
   font-family: monospace;
-  text-align: center;
+  text-align: left;
 }
 
 #cinta-visual {
@@ -102,15 +102,23 @@ textarea {
   font-weight: bold;
   color: red;
 }
+.cinta-actual {
+  font-weight: bold;
+  background-color: #e0f7fa;
+  color: red;
+}
 
+#titulo-maquina{
+  font-weight: bold; 
+  font-size: 1.2em; 
+  text-align: left;
+}
 .velocidad-control {
-  margin: auto;
-  max-width: 500px;
+  max-width: 300px;
   margin-top: 20px;
   display: flex;
   flex-direction: column;
 }
-
 #velocidad-valor {
   font-weight: bold;
 }
